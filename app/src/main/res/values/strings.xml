@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Android Programming Test</string>
+    <string name="id">ID:</string>
+    <string name="name">Name:</string>
+    <string name="email">Email:</string>
+    <string name="phone">Phone:</string>
+    <string name="user_info">User Info</string>
+    <string name="photo_id">Photo ID:</string>
+    <string name="album_id">Album ID:</string>
+</resources>
