@@ -1,53 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.main.view.MainUserActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Album ID: "
-                android:textColor="@android:color/black"
-                android:gravity="center_horizontal"
-                android:textSize="24sp"
-                />
-            <TextView
-                android:id="@+id/textView_albumId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="1"
-                android:textColor="@android:color/black"
-                android:gravity="center_horizontal"
-                android:textSize="24sp"
-                />
-        </LinearLayout>
-    </androidx.appcompat.widget.Toolbar>
+    <data>
 
-    <FrameLayout
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ProgressBar
-            android:id="@+id/progressbar"
-            android:layout_marginTop="80dp"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center_horizontal"
-            android:indeterminateDrawable="@drawable/circular_progress_blue"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView_photos"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.main.view.MainUserActivity">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </FrameLayout>
-</LinearLayout>
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Album ID: "
+                    android:textColor="@android:color/black"
+                    android:gravity="center_horizontal"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/textView_albumId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="1"
+                    android:textColor="@android:color/black"
+                    android:gravity="center_horizontal"
+                    android:textSize="24sp" />
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ProgressBar
+                android:id="@+id/progressbar"
+                android:layout_marginTop="80dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center_horizontal"
+                android:indeterminateDrawable="@drawable/circular_progress_blue" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_photos"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
+    </LinearLayout>
+</layout>

@@ -1,39 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.main.view.MainUserActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/textView_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="Test Text"
-            android:textColor="@android:color/black"
-            android:gravity="center_horizontal"
-            android:textSize="24sp"
-            />
-    </androidx.appcompat.widget.Toolbar>
+    <data>
 
-    <FrameLayout
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ProgressBar
-            android:id="@+id/progressbar"
-            android:layout_marginTop="80dp"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center_horizontal"
-            android:indeterminateDrawable="@drawable/circular_progress_blue"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView_users"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.main.view.MainUserActivity">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </FrameLayout>
-</LinearLayout>
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textView_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/user_info"
+                android:textColor="@android:color/black"
+                android:gravity="center_horizontal"
+                android:textSize="24sp" />
+        </androidx.appcompat.widget.Toolbar>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ProgressBar
+                android:id="@+id/progressbar"
+                android:layout_marginTop="80dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center_horizontal"
+                android:indeterminateDrawable="@drawable/circular_progress_blue" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_users"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
+    </LinearLayout>
+</layout>
