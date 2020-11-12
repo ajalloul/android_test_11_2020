@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="viewmodel"
+            type="com.adnanjalloul.androidtest_11_2020.ui.main.viewmodel.PhotoViewModel" />
     </data>
 
     <LinearLayout
@@ -43,7 +45,7 @@
                         android:id="@+id/textView_albumId"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="1"
+                        android:text="@{Integer.toString(viewmodel.photo.albumId)}"
                         android:textColor="@android:color/black"
                         android:gravity="center_horizontal"
                         android:textSize="24sp" />
@@ -68,7 +70,7 @@
                         android:id="@+id/textView_photoId"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="1"
+                        android:text="@{Integer.toString(viewmodel.photo.photoId)}"
                         android:textColor="@android:color/black"
                         android:gravity="center_horizontal"
                         android:textSize="24sp" />
@@ -98,6 +100,6 @@
             android:gravity="center_horizontal"
             android:background="@color/colorPrimary"
             android:textColor="@android:color/white"
-            tools:text="Dummy text xyz 123" />
+            android:text="@{viewmodel.photo.text}"/>
     </LinearLayout>
 </layout>

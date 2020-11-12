@@ -83,7 +83,6 @@ class MainUserActivity : AppCompatActivity() {
     private fun setupToolbar(binding : ActivityMainUserBinding) {
         setSupportActionBar(toolbar!!)
         if (supportActionBar != null) {
-            binding.textViewTitle.text = getString(R.string.user_info)
             supportActionBar!!.setDisplayHomeAsUpEnabled(false)
             supportActionBar!!.setDisplayShowTitleEnabled(false)
         }

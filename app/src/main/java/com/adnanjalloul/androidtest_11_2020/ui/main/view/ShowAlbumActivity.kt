@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,35 +14,37 @@ import com.adnanjalloul.androidtest_11_2020.data.api.UserApiHelper
 import com.adnanjalloul.androidtest_11_2020.data.api.UserApiServiceImplementation
 import com.adnanjalloul.androidtest_11_2020.data.model.Photo
 import com.adnanjalloul.androidtest_11_2020.data.model.User
+import com.adnanjalloul.androidtest_11_2020.databinding.ActivityShowAlbumBinding
 import com.adnanjalloul.androidtest_11_2020.ui.base.ViewModelFactory
 import com.adnanjalloul.androidtest_11_2020.ui.main.adapter.AlbumPhotoAdapter
-import com.adnanjalloul.androidtest_11_2020.ui.main.viewmodel.PhotoViewModel
-import kotlinx.android.synthetic.main.activity_main_user.*
-import kotlinx.android.synthetic.main.activity_show_album.*
+import com.adnanjalloul.androidtest_11_2020.ui.main.viewmodel.AlbumViewModel
 import kotlinx.android.synthetic.main.activity_show_album.progressbar
-import kotlinx.android.synthetic.main.activity_show_album.toolbar
 
 class ShowAlbumActivity : AppCompatActivity() {
-    private lateinit var photoViewModel: PhotoViewModel
+    private lateinit var albumViewModel: AlbumViewModel
     private lateinit var adapter: AlbumPhotoAdapter
-    private lateinit var user: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_show_album)
-        getData()
-        setupUI()
-        setupToolbar()
         setupViewModel()
-        setupObserver()
+        getData()
+        val binding : ActivityShowAlbumBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_show_album)
+        binding.viewmodel = albumViewModel
+        binding.lifecycleOwner = this
+        albumViewModel.fetchAlbum()
+        setupUI(binding)
+        setupToolbar(binding)
+        setupObserver(binding)
     }
 
     private fun getData(){
-        user = intent.getParcelableExtra<User?>("USER")?:User()
+        albumViewModel.setUserValue(intent.getParcelableExtra<User?>("USER")?:User())
+
     }
 
-    private fun setupUI() {
-        recyclerView_photos.layoutManager = LinearLayoutManager(this)
+    private fun setupUI(binding: ActivityShowAlbumBinding) {
+        binding.recyclerViewPhotos.layoutManager = LinearLayoutManager(this)
         adapter = AlbumPhotoAdapter(arrayListOf())
         adapter.setOnAlbumPhotoItemSelectedListener(object :
             AlbumPhotoAdapter.IAlbumPhotoItemSelectedListener {
@@ -53,24 +56,24 @@ class ShowAlbumActivity : AppCompatActivity() {
 
 
         })
-        recyclerView_photos.adapter = adapter
+        binding.recyclerViewPhotos.adapter = adapter
     }
 
-    private fun setupObserver() {
-        photoViewModel.getPhotos().observe(this, Observer {
+    private fun setupObserver(binding : ActivityShowAlbumBinding) {
+        albumViewModel.getPhotos().observe(this, Observer {
             when (it.status) {
                 Status.SUCCESS -> {
-                    progressbar.visibility = View.GONE
+                    binding.progressbar.visibility = View.GONE
                     it.data?.let { users -> renderList(users) }
-                    recyclerView_photos.visibility = View.VISIBLE
+                    binding.recyclerViewPhotos.visibility = View.VISIBLE
                 }
                 Status.LOADING -> {
                     progressbar.visibility = View.VISIBLE
-                    recyclerView_photos.visibility = View.GONE
+                    binding.recyclerViewPhotos.visibility = View.GONE
                 }
                 Status.ERROR -> {
                     //Handle Error
-                    progressbar.visibility = View.GONE
+                    binding.progressbar.visibility = View.GONE
                     Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
                 }
             }
@@ -83,18 +86,16 @@ class ShowAlbumActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        photoViewModel = ViewModelProviders.of(
+        albumViewModel = ViewModelProviders.of(
             this,
             ViewModelFactory(UserApiHelper(UserApiServiceImplementation()))
-        ).get(PhotoViewModel::class.java)
-
-        photoViewModel.fetchAlbum(user.id)
+        ).get(AlbumViewModel::class.java)
     }
 
-    private fun setupToolbar() {
-        setSupportActionBar(toolbar!!)
+    private fun setupToolbar(binding : ActivityShowAlbumBinding) {
+        setSupportActionBar(binding.toolbar)
         if (supportActionBar != null) {
-            textView_albumId.text = user.id.toString()
+            binding.textViewAlbumId.text = albumViewModel.user.value!!.id.toString()
             supportActionBar!!.setDisplayHomeAsUpEnabled(false)
             supportActionBar!!.setDisplayShowTitleEnabled(false)
         }
