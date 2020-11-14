@@ -16,6 +16,7 @@ import com.adnanjalloul.androidtest_11_2020.ui.main.viewmodel.UserViewModel
 import com.adnanjalloul.androidtest_11_2020.utils.Resource
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.internal.operators.single.SingleError
 import org.junit.After
 import org.junit.Test
 
@@ -56,31 +57,37 @@ class MainUserActivityTests {
     @Test
     fun testNullGetUsers() {
         var mock = Mockito.mock(UserApiServiceImplementation::class.java)
-        `when`(mock.getUsers()).thenReturn(Single.just(listOfNotNull<User>()))
+        `when`(mock.getUsers()).thenReturn(Single.just(listOf<User>()))
         var mockUsers = mock.getUsers()
 
-        assert(mockUsers.equals(Single.just(listOfNotNull<User>())))
+        assert(mockUsers is Single<List<User>>)
     }
 
     @Test
-    fun testNullGetPhotoAlbum() {
-        var mock = Mockito.mock(UserApiServiceImplementation::class.java)
-        `when`(mock.getPhotoAlbum(1)).thenReturn(Single.just(listOf<Photo>()))
-        mock.getPhotoAlbum(1)
+    fun testGetPhotoAlbumError() {
+        val mock = Mockito.mock(UserApiServiceImplementation::class.java)
+        `when`(mock.getPhotoAlbum(1)).thenReturn(Single.error(Throwable("Api Error")))
+        val a = mock.getPhotoAlbum(1)
+
+        assert(a is SingleError)
     }
 
     @Test
     fun testApiFetchDataSuccess() {
         var mock = Mockito.mock(UserViewModel::class.java)
         `when`(mock.getUsers()).thenReturn(MutableLiveData<Resource<List<User>>>())
-        mock.getUsers()
+        val a = mock.getUsers()
+
+        assert(a is LiveData<Resource<List<User>>>)
     }
 
     @Test
-    fun testApiFetchDataError() {
+    fun testGetUserDataError() {
         var mock = Mockito.mock(UserApiHelper::class.java)
         `when`(mock.getUsers()).thenReturn(Single.error(Throwable("Api error")))
-        mock.getUsers()
+        val a = mock.getUsers()
+
+        assert(a is SingleError)
     }
 
     @After
